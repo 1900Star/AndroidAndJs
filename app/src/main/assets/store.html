@@ -1,0 +1,33 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport"
+		  content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+	<title>创建和删除标签</title>
+	<script type="text/javascript">
+			function addLi() {
+				var str = document.getElementById("input_text").value
+				var newLi = document.createElement("li")
+				newLi.innerText = str
+				var u2 = document.getElementById("u1")
+				u2.appendChild(newLi)
+			}
+
+			function deleteLi() {
+				var u3 = document.getElementById("u1")
+				var liList= document.getElementsByTagName("li")
+				u3.removeChild(liList[0])
+			}
+
+    </script>
+</head>
+<body>
+<input type="text" name="" id="input_text" placeholder="请输入文字"/><br><br>
+<input type="button" name="" id="btn1" value="添加" onclick="addLi()"/>
+<input type="button" name="" id="btn2" value="删除" onclick="deleteLi()"/>
+<ul id="u1">
+	<li>睡觉</li>
+	<li>安全码</li>
+</ul>
+</body>
+</html>

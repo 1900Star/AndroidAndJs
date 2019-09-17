@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title></title>
+    <script type="text/javascript">
+			function changeText () {
+			var pA=	document.getElementById("p_text");
+			pA.innerHTML="Google";
+			pA.style.fontSize="xx-large"
+			pA.style.color="deeppink"
+			}
+			
+			function changeStyle (text) {
+			alert(text)
+			var bb=	document.getElementById("p_text2")
+			bb.innerHTML=text;
+			bb.style.color="white"
+			bb.style.alignContent="center"
+			
+			bb.style.backgroundColor="green"
+		
+			}
+			function jsToAndroid () {
+
+			smartisan.hellowWorld('Smartisan OS');
+			}
+			function sum ( name, age) {
+				return (name+age)
+			}
+
+			function interceptP (msg) {
+                 alert(msg);
+			}
+
+
+
+            function confirmP(msg) {
+				 var resutlt = confirm(msg);
+			}
+
+			function promptP(msg) {
+			    var resutlt = prompt("please input your password", msg);
+
+			}
+	        function androidChangeText (msg) {
+			    var pA=	document.getElementById("p_text");
+			    pA.innerHTML=msg;
+			    pA.style.fontSize="xx-large"
+			    pA.style.color="deeppink"
+			}
+
+
+
+
+    </script>
+</head>
+<body>
+<div id="AA" style="width:150px ; height: 100px; background-color: aqua;">
+    <p id="p_text" align="center"> 标题AA</p>
+
+</div>
+<br><br>
+<div id="BB" style="width:150px ; height: 100px; background-color: red;">
+    <p id="p_text2" align="center"> 标题BB</p>
+</div>
+<br><br>
+
+<input type="button" name="改文字" value="改文字" id="change_text" onclick="changeText()"/>
+<input type="button" name="改样式" value="改样式" id="change_style" onclick="changeStyle()"/><br>
+<input type="button" value="删除" id="delete_p" onclick="jsToAndroid()" style="margin: 8px;"/>
+</body>
+</html>
