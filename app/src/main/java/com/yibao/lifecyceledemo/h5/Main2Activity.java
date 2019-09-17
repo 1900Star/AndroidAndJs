@@ -1,11 +1,12 @@
-package com.yibao.lifecyceledemo;
+package com.yibao.lifecyceledemo.h5;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
+
+import com.yibao.lifecyceledemo.MainActivity;
+import com.yibao.lifecyceledemo.R;
 
 public class Main2Activity extends AppCompatActivity {
 

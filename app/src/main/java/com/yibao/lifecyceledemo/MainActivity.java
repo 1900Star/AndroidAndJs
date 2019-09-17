@@ -1,10 +1,8 @@
 package com.yibao.lifecyceledemo;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.webkit.JsPromptResult;
 import android.webkit.JsResult;
@@ -12,10 +10,12 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.yibao.lifecyceledemo.h5.JsObject;
+import com.yibao.lifecyceledemo.h5.Main2Activity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     //处理确定按钮了，且过jsresult传递，告诉js点击的是确定按钮(参数就是输入框新输入的值，我们需要回传到js中)
                     result.confirm(newValue);
 //                    startActivity(new Intent(MainActivity.this, Main2Activity.class));
-                    mWebView.evaluateJavascript("javascript:androidChangeText(\"" + "HTC" + "\")", value -> {
+                    mWebView.evaluateJavascript("javascript:androidChangeText(\"" + newValue + "\")", value -> {
                     });
 
 

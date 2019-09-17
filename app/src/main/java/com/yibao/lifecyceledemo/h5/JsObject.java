@@ -1,9 +1,10 @@
-package com.yibao.lifecyceledemo;
+package com.yibao.lifecyceledemo.h5;
 
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
+import android.widget.Toast;
 
 /**
  * @author luoshipeng
@@ -20,9 +21,13 @@ public class JsObject {
 
     @JavascriptInterface
     public void hellowWorld(String msg) {
-//        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
         mContext.startActivity(new Intent(mContext, Main2Activity.class));
         Log.d("lsp", "js 调用安卓的方法    " + msg);
+    }
 
+    @JavascriptInterface
+    public void showToast(String msg) {
+        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+        Log.d("lsp", "js 调用安卓的方法    " + msg);
     }
 }
