@@ -2,10 +2,13 @@ package com.yibao.lifecyceledemo;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.JsPromptResult;
 import android.webkit.JsResult;
+import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -16,6 +19,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.yibao.lifecyceledemo.h5.JsObject;
 import com.yibao.lifecyceledemo.h5.Main2Activity;
+import com.yibao.lifecyceledemo.optization.TimeMonitorConfig;
+import com.yibao.lifecyceledemo.optization.TimeMonitorManager;
+
+import java.util.Set;
+
+import dalvik.system.PathClassLoader;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -24,13 +33,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        TimeMonitorManager.getInstance().getTimeMonitor(TimeMonitorConfig.TIME_MONITOR_ID_APPLICATION_START).recordingTimeTag("SplashActivity-onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getLifecycle().addObserver(new MyLifecyclerObserver());
         initView();
         loadHtml();
         initListener();
+        TimeMonitorManager.getInstance().getTimeMonitor(TimeMonitorConfig.TIME_MONITOR_ID_APPLICATION_START).recordingTimeTag("SplashActivity-onCreate-Over");
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        TimeMonitorManager.getInstance().getTimeMonitor(TimeMonitorConfig.TIME_MONITOR_ID_APPLICATION_START).end("SplashActivity-onStart", false);
     }
 
     @Override
@@ -47,7 +64,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn3:
                 // confirmP interceptP promptP
-                mWebView.evaluateJavascript("javascript:promptP(\"" + "HTC" + "\")", value -> {
+                mWebView.evaluateJavascript("javascript:promptP(\"" + "HTC" + "\")", new ValueCallback<String>() {
+                    @Override
+                    public void onReceiveValue(String value) {
+                        Log.d("lsp", " onReceiveValue   " + value);
+                    }
                 });
                 break;
             default:
@@ -58,6 +79,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initListener() {
         mWebView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                Log.d("lsp", " 加载进度  " + newProgress);
+            }
+
             @Override
             public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -107,6 +134,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public boolean onJsPrompt(WebView view, String url, String message, String defaultValue,
                                       final JsPromptResult result) {
+
+                Log.d("lsp", "url   " + url);
+                Log.d("lsp", "message    " + message);
+                Log.d("lsp", "defaultValue    " + defaultValue);
+                Uri uri = Uri.parse(message);
+                String scheme = uri.getScheme();
+                if (scheme != null) {
+                    if (scheme.equals("ps")) {
+                        if (uri.getAuthority().equals("web")) {
+                            Set<String> queryParameterNames = uri.getQueryParameterNames();
+                            for (String queryParameterName : queryParameterNames) {
+                                Log.d("lsp", " arg   :   " + uri.getQueryParameter(queryParameterName));
+                            }
+                        } else {
+                            Log.d("lsp", "协议出错。");
+                        }
+                    } else {
+                        Log.d("lsp", "协议出错。");
+                    }
+
+                }
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle("Js的Prompt方法");
                 builder.setMessage(message);//这个message就是alert传递过来的值
@@ -126,8 +174,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                    startActivity(new Intent(MainActivity.this, Main2Activity.class));
                     mWebView.evaluateJavascript("javascript:androidChangeText(\"" + newValue + "\")", value -> {
                     });
-
-
                 });
                 builder.setNegativeButton("取消", (dialog, which) -> {
                     //处理取消按钮，且过jsresult传递，告诉js点击的是取消按钮
@@ -151,15 +197,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-
     @SuppressLint("SetJavaScriptEnabled")
     private void loadHtml() {
         WebSettings settings = mWebView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
+//        String url = "http://169.254.68.127:8080/dom.html";
         mWebView.loadUrl("file:///android_asset/dom.html");
+//        mWebView.loadUrl(url);
         mWebView.addJavascriptInterface(new JsObject(this), "smartisan");
-        mWebView.setWebChromeClient(new WebChromeClient());
+//        mWebView.setWebChromeClient(new WebChromeClient());
     }
 
 }

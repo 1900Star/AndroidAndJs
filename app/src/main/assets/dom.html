@@ -2,8 +2,9 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="h1"/>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <title></title>
     <script type="text/javascript">
 			function changeText () {
@@ -48,6 +49,10 @@
 			}
 
 			function promptP(msg) {
+			    var result = prompt("ps://web?arg1=smartisan&arg2=18", msg);
+			}
+
+			function promptPs(msg) {
 			    var resutlt = prompt("please input your password", msg);
 
 			}
@@ -57,6 +62,7 @@
 			    pA.style.fontSize="xx-large"
 			    pA.style.color="deeppink"
 			}
+
 
 
 
@@ -76,7 +82,8 @@
 
 <input type="button" name="改文字" value="改文字" id="change_text" onclick="changeText()"/>
 <input type="button" name="改样式" value="改样式" id="change_style" onclick="changeStyle()"/><br>
-<input type="button" value="删除" id="delete_p" onclick="jsToAndroid()" style="margin: 8px;" width="100%"/><br>
+<input type="button" value="删除" id="delete_p" onclick="jsToAndroid()" style="margin: 8px;"
+       width="100%"/><br>
 <input type="button" value="弹出" id="add_p" onclick="addP()" style="margin: 8px;" width="100%"/><br>
 
 </body>

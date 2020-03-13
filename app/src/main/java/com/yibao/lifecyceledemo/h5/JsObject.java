@@ -27,6 +27,7 @@ public class JsObject {
 
     @JavascriptInterface
     public void showToast(String msg) {
+//        mContext.startActivity(new Intent(mContext, Main2Activity.class));
         Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
         Log.d("lsp", "js 调用安卓的方法    " + msg);
     }
