@@ -37,4 +37,10 @@ public class MyLifecyclerObserver implements LifecycleObserver {
 //        ...
         Log.d("lsp", "disconnectListener: -------   ON_STOP");
     }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    public void disconnectDestroyListener() {
+//        ...
+        Log.d("lsp", "disconnectListener: -------   ON_DESTROY");
+    }
 }

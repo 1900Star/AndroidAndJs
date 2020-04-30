@@ -21,7 +21,7 @@ public class TimeMonitorManager {
     }
 
     public TimeMonitorManager() {
-        this.mTimeMonitorMap = new HashMap<Integer, TimeMonitor>();
+        this.mTimeMonitorMap = new HashMap<>();
     }
 
     /**

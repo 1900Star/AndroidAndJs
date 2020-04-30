@@ -13,10 +13,12 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.yibao.lifecyceledemo.h5.JsObject;
 import com.yibao.lifecyceledemo.h5.Main2Activity;
 import com.yibao.lifecyceledemo.optization.TimeMonitorConfig;
@@ -24,12 +26,11 @@ import com.yibao.lifecyceledemo.optization.TimeMonitorManager;
 
 import java.util.Set;
 
-import dalvik.system.PathClassLoader;
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
 
     private WebView mWebView;
+    private ImageView mIv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +55,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn1:
-                mWebView.evaluateJavascript("javascript:changeText()", value -> {
-                });
+                startActivity(new Intent(MainActivity.this, Main2Activity.class));
+//                mWebView.evaluateJavascript("javascript:changeText()", value -> {
+//                });
                 break;
             case R.id.btn2:
 //                mWebView.loadUrl("javascript:changeStyle()");
@@ -148,10 +150,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 Log.d("lsp", " arg   :   " + uri.getQueryParameter(queryParameterName));
                             }
                         } else {
-                            Log.d("lsp", "协议出错。");
+                            Log.d("lsp", "协议出错。 Authority  " + uri.getAuthority());
                         }
                     } else {
-                        Log.d("lsp", "协议出错。");
+                        Log.d("lsp", "协议出错。scheme " + scheme);
                     }
 
                 }
@@ -194,7 +196,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btn1).setOnClickListener(this);
         findViewById(R.id.btn2).setOnClickListener(this);
         findViewById(R.id.btn3).setOnClickListener(this);
-
+        mIv = findViewById(R.id.iv);
+        String imgUrl = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1584080473919&di=446c01077c9beed8505a6cdc0de3a84d&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2Fa62f2e4dd07b75ee2ca1ffe576ece585aaf6439c6c83-4DS67H_fw658";
+//        Glide.with(this).load(imgUrl).into(mIv);
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -202,10 +206,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         WebSettings settings = mWebView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
-//        String url = "http://169.254.68.127:8080/dom.html";
-        mWebView.loadUrl("file:///android_asset/dom.html");
+        String url = "http://192.168.0.233:8080/dom.html";
+
 //        mWebView.loadUrl(url);
-        mWebView.addJavascriptInterface(new JsObject(this), "smartisan");
+        mWebView.loadUrl("file:///android_asset/dom.html");
+//        mWebView.addJavascriptInterface(new JsObject(this), "smartisan");
 //        mWebView.setWebChromeClient(new WebChromeClient());
     }
 
